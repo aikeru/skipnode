@@ -1,0 +1,47 @@
+//
+   Created by Michael on 5/2/2014.
+mixin displayCard(card, index)
+    if !card
+        div(class='emptyCard', data-index=index) &nbsp;
+    else if card.value === 0
+        div(class='card ' + card.color, data-color=card.color, data-value=card.value, data-index=index) Skip
+    else
+        div(class='card ' + card.color, data-color=card.color, data-value=card.value, data-index=index) #{card.value}
+
+doctype html
+html
+    head
+        title= title
+        meta(name=viewport, content="width=device-width, initial-scale=4.0, maximum-scale=4.0, user-scalable=no")
+        script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js")
+        link(rel="stylesheet", href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/redmond/jquery-ui.css")
+        link(rel="stylesheet", href="/stylesheets/dashboard.css")
+        script(type='text/javascript', src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js")
+        script var gameData = !{JSON.stringify({game: game, player: player, ourTurn: ourTurn })};
+        script(src="/javascripts/dashboard.js")
+    body(style="margin: 0 0 0 0;")
+        div.dashboardTitle #{player.displayName} - SkipNode - (#{player.remaining.length}) Left
+        div.hand.mine
+            for i in [0,1,2,3,4]
+                +displayCard(player.hand[i], i)
+        div.inPlayTitle #{player.displayName}'s cards in play
+        div.hand.inplay
+            +displayCard(player.remaining[player.remaining.length - 1])
+            for i in [0,1,2,3]
+                +displayCard(player.slots[i][player.slots[i].length - 1], i)
+        div.onTableTitle Cards on table
+        div.hand.ontable
+            for i in [0,1,2,3]
+                +displayCard(game.tableSlots[i][game.tableSlots[i].length - 1], i)
+        for otherPlayer in game.players
+            if otherPlayer.userName !== player.userName
+                div.otherPlayer #{otherPlayer.displayName}'s cards
+                div.hand
+                    each slot, index in otherPlayer.slots
+                        +displayCard(slot[slot.length - 1], index)
+        div.options
+            if ourTurn
+                button.jqButton.discardButton Discard
+                button.jqButton.playButton Play
+            else
+                | Waiting for #{currentPlayerName} to play!

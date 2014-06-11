@@ -184,7 +184,7 @@ $(function() {
             $.ajax({ url: '/game/dashboard?gameName=' + gameData.game.name + '&userName=' + gameData.player.userName })
                 .done(function(msg) {
                     console.log('Is it our turn yet? ' + msg.ourTurn);
-                    if(!msg.ourTurn) {
+                    if(!msg.ourTurn && gameData.game.mode !== 2) {
                         window.setTimeout(checkLoop, 2000);
                     } else {
                         window.location.reload();

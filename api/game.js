@@ -116,6 +116,10 @@ var instance = {
                     game.tableSlots[toIndex] = [];
                 }
 
+                if(currentPlayer.remaining.length === 0) {
+                    game.mode = 2;
+                }
+
                 return instance.saveGame(game);
             })
     },
@@ -134,6 +138,11 @@ var instance = {
                 } else {
                     currentPlayer.slots[toIndex].push(card);
                 }
+
+                if(currentPlayer.remaining.length === 0) {
+                    game.mode = 2;
+                }
+
                 return instance.saveGame(game);
             })
     },
@@ -143,6 +152,9 @@ var instance = {
                 var currentPlayer = game.players[game.currentPlayerIndex];
                 var topRemainingCard = currentPlayer.remaining.pop();
                 game.tableSlots[toIndex].push(topRemainingCard);
+                if(currentPlayer.remaining.length === 0) {
+                    game.mode = 2;
+                }
                 return instance.saveGame(game);
             })
     }

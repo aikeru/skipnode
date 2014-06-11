@@ -43,9 +43,13 @@ html
             if otherPlayer.userName !== player.userName
                 div.otherPlayer #{otherPlayer.displayName}'s cards
                 div.hand
-                    +displayCard(otherPlayer.remaining[otherPlayer.remaining.length - 1])
-                    each slot, index in otherPlayer.slots
-                        +displayCard(slot[slot.length - 1], index)
+                    div.remainingContainer
+                        span.remainingContainerTitle #{otherPlayer.remaining.length} Remaining
+                        +displayCard(otherPlayer.remaining[otherPlayer.remaining.length - 1])
+                    div.slotsContainer
+                        span.slotsContainerTitle Cards in #{otherPlayer.displayName}'s slots
+                        each slot, index in otherPlayer.slots
+                            +displayCard(slot[slot.length - 1], index)
         div.options
             if ourTurn
                 button.jqButton.discardButton Discard

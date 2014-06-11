@@ -16,7 +16,7 @@ $(function() {
                     url: '/game/addplayer',
                     data: { name: gameName, userName: gameData.userName, displayName: displayName }
                 }).done(function() {
-                    window.location.href = '/game/' + gameName;
+                    window.location.href = '/dashboard?gameName=' + encodeURIComponent(gameName);
                 })
             })
     });

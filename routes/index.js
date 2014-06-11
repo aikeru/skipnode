@@ -78,7 +78,7 @@ module.exports = function(app, passport) {
                         game: game,
                         isInGame: isInGame
                     });
-                } else {
+                } else if(game.mode === 1) {
                     var player,
                         ourTurn = false,
                         currentPlayerName = '',
@@ -98,6 +98,17 @@ module.exports = function(app, passport) {
                         player: player,
                         ourTurn: ourTurn,
                         currentPlayerName: currentPlayerName
+                    });
+                } else if(game.mode === 2) {
+                    var winner;
+                    for(var i = 0; i < game.players.length; i++) {
+                        if(game.players[i].remaining.length === 0) {
+                            winner = game.players[i];
+                        }
+                    }
+                    res.render('gameover-dashboard', {
+                       game: game,
+                        winner: winner
                     });
                 }
 

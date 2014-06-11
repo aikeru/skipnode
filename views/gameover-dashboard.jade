@@ -1,0 +1,16 @@
+extends layout
+block content
+    h1= title
+    p Game #{game.name} is over!
+    p #{winner.displayName} is the winner!
+    p
+        for player in game.players
+            ul
+                li #{player.displayName} had #{player.remaining.length} remaining...
+    p Thanks for playing!
+    p
+        a(href='/profile') Return to dashboard...
+block scripts
+    script.
+        var gameData = !{JSON.stringify(gameData)};
+    script(src="/javascripts/waiting-dashboard.js")

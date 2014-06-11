@@ -1,0 +1,18 @@
+extends layout
+block content
+    h1= title
+    p Login to SkipNode
+    p
+        form(action='/login', method='post')
+            div
+                | Email :
+                input(type="text", name="email")
+            div
+                | Password :
+                input(type="text", name="password")
+            div
+                button(type="submit") Login
+            div #{message}
+block scripts
+    script(src="/javascripts/index.js")
+            

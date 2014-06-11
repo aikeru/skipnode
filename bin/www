@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 var debug = require('debug')('skipnode2');
-var app = require('../app');
 var database = require('../api/database');
 
-app.set('port', process.env.PORT || 3000);
-
 database.promise.then(function() {
+    var app = require('../app');
+    app.set('port', process.env.PORT || 3000);
     var server = app.listen(app.get('port'), function() {
         debug('Express server listening on port ' + server.address().port);
     });

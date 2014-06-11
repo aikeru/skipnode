@@ -10,12 +10,24 @@ var users = require('./routes/users');
 var games = require('./routes/games');
 var game = require('./routes/game');
 var passport = require('passport');
+var flash = require('connect-flash'); //no this isn't adobe flash :)
+
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 var app = express();
+
+require('./config/passport')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+app.use(cookieParser());
+app.use(session({secret: 'mikeisdabombdabombyeah'}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -24,10 +36,10 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/games', games);
-app.use('/game', game);
+app.use('/', routes(app, passport));
+app.use('/users', users(app, passport));
+app.use('/games', games(app, passport));
+app.use('/game', game(app, passport));
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

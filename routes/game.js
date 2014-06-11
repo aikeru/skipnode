@@ -77,4 +77,6 @@ router.get('/dashboard', function(req, res) {
         });
 });
 
-module.exports = router;
+module.exports = function(app, passport) {
+    return router;
+};

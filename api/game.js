@@ -109,6 +109,13 @@ var instance = {
                 var currentPlayer = game.players[game.currentPlayerIndex];
                 var card = currentPlayer.slots[fromIndex].pop();
                 game.tableSlots[toIndex].push(card);
+
+                if(card.value === 12) {
+                    //Discard this stack
+                    game.discard = game.discard.concat(game.tableSlots[toIndex].slice(0));
+                    game.tableSlots[toIndex] = [];
+                }
+
                 return instance.saveGame(game);
             })
     },

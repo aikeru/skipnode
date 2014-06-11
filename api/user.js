@@ -40,6 +40,13 @@ var instance = {
     },
     findOne: function(opts) {
         return users.findOneAsync(opts);
+    },
+    getUserGames: function(userName) {
+        return games.findAsync({ 'players.userName': userName })
+            .then(function(cursor) {
+                var pGames = Promise.promisifyAll(cursor);
+                return pGames.toArrayAsync();
+            });
     }
 };
 

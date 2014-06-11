@@ -18,6 +18,7 @@ function getEffectiveValue($element) {
 
 function initTurn() {
     $('.hand.ontable').find('.card,.emptyCard').click(function() {
+        if($(this).is('.selected')) { $('.selected').removeClass('selected'); return; }
         if($('.selected').length > 1) { return; }
         if(selectionMode === 'play') {
             $('.hand.ontable .selected').removeClass('selected');
@@ -26,6 +27,7 @@ function initTurn() {
         }
     });
     $('.hand.inplay').find('.card,.emptyCard').click(function() {
+        if($(this).is('.selected')) { $('.selected').removeClass('selected'); return; }
         //if(selectionMode === 'select') {
         if(lastSelectedType === 'mine') {
             if($(this).data('index') === undefined) {
@@ -48,6 +50,7 @@ function initTurn() {
         //}
     });
     $('.hand.mine').find('.card').click(function() {
+        if($(this).is('.selected')) { $('.selected').removeClass('selected'); return; }
         //if(selectionMode === 'select') {
         $('.selected').removeClass('selected');
         $(this).addClass('selected');
@@ -58,7 +61,7 @@ function initTurn() {
     $('.jqButton.discardButton').click(function() {
         var selectedCard = $('.card.selected, .emptyCard.selected');
         if(selectedCard.length < 2) { alert('You must select a card and a slot.'); return; }
-        if(selectedCard.parent().is('.ontable')) { alert('You cannot discard onto the table.'); return; }
+        if(selectedCard.closest('.hand').is('.ontable')) { alert('You cannot discard onto the table.'); return; }
         $.ajax({url: '/game/discard', data: {
             fromIndex: $('.hand.mine .card.selected').data('index'),
             toIndex: $('.hand.inplay .selected').data('index'),
@@ -82,18 +85,18 @@ function initTurn() {
             fromValue,
             toValue;
 
-        if(selectedCard.parent().is('.mine')) {
+        if(selectedCard.closest('.hand').is('.mine')) {
             //Play from the hand
             fromLocation = 'hand';
             fromCard = $('.mine .card.selected');
             fromValue = fromCard.data('value');
             fromIndex = fromCard.data('index');
 
-            if(selectedCard.parent().is('.inplay')) {
+            if(selectedCard.closest('.hand').is('.inplay')) {
                 alert('You cannot play into your slots. Did you mean to discard?');
                 return;
             }
-            if(selectedCard.parent().is('.ontable')) {
+            if(selectedCard.closest('.hand').is('.ontable')) {
                 toLocation = 'table';
                 toIndex = $('.ontable .emptyCard.selected, .ontable .card.selected').data('index');
                 toValue = getEffectiveValue($('.ontable .emptyCard.selected, .ontable .card.selected'));
@@ -106,7 +109,7 @@ function initTurn() {
                         && toValue !== undefined) {
                         alert('You can only play a one (1) on an empty slot.');
                         return;
-                    } else if(toValue === undefined || fromValue !== toValue + 1) {
+                    } else if(fromValue !== 1 && (toValue === undefined || fromValue !== toValue + 1)) {
                         alert('That is not a valid play.');
                         return;
                     }
@@ -123,7 +126,7 @@ function initTurn() {
                    window.location.reload();
                 });
             return;
-        } else if(selectedCard.parent().is('.inplay')) {
+        } else if(selectedCard.closest('.hand').is('.inplay')) {
 
             fromCard = $('.inplay .selected');
 
@@ -150,7 +153,7 @@ function initTurn() {
             } else {
                 //Play from slot
 
-                toValue = getEffectiveValue($('.ontable .emptyCard.selected, .ontable .card.selected').data('value'));
+                toValue = getEffectiveValue($('.ontable .emptyCard.selected, .ontable .card.selected'));
                 fromValue = +fromCard.data('value');
                 if(fromValue !== 0) {
                     if(fromValue === 1 && isNaN(toValue) === false) {

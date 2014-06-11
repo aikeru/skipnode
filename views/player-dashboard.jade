@@ -20,15 +20,21 @@ html
         script var gameData = !{JSON.stringify({game: game, player: player, ourTurn: ourTurn })};
         script(src="/javascripts/dashboard.js")
     body(style="margin: 0 0 0 0;")
-        div.dashboardTitle #{player.displayName} - SkipNode - (#{player.remaining.length}) Left
+        div.dashboardTitle
+            a(href='/profile') #{player.displayName}
+            |&nbsp;- SkipNode - (#{player.remaining.length}) Left
         div.hand.mine
             for i in [0,1,2,3,4]
                 +displayCard(player.hand[i], i)
         div.inPlayTitle #{player.displayName}'s cards in play
         div.hand.inplay
-            +displayCard(player.remaining[player.remaining.length - 1])
-            for i in [0,1,2,3]
-                +displayCard(player.slots[i][player.slots[i].length - 1], i)
+            div.remainingContainer
+                span.remainingContainerTitle #{player.remaining.length} Cards Remaining...
+                +displayCard(player.remaining[player.remaining.length - 1])
+            div.slotsContainer
+                span.slotsContainerTitle Cards in your slots...
+                for i in [0,1,2,3]
+                    +displayCard(player.slots[i][player.slots[i].length - 1], i)
         div.onTableTitle Cards on table
         div.hand.ontable
             for i in [0,1,2,3]
@@ -37,6 +43,7 @@ html
             if otherPlayer.userName !== player.userName
                 div.otherPlayer #{otherPlayer.displayName}'s cards
                 div.hand
+                    +displayCard(otherPlayer.remaining[otherPlayer.remaining.length - 1])
                     each slot, index in otherPlayer.slots
                         +displayCard(slot[slot.length - 1], index)
         div.options

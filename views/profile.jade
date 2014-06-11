@@ -1,0 +1,17 @@
+extends layout
+block content
+    h1= title
+    p Welcome, #{user.local.email}
+    p Games you are in ...
+        for game in games
+            if game.mode < 2
+                ul
+                    li
+                        a(href='/dashboard?gameName=' + game.name) #{game.name}
+                        span #{game.mode === 0 ? '(Waiting)' : '(Started)'}
+    p
+        button(id="btnStartNewGame") Start New Game
+block scripts
+    script.
+        var gameData = !{JSON.stringify(gameData)};
+    script(src='/javascripts/profile.js')

@@ -1,0 +1,17 @@
+extends layout
+block content
+    h1= title
+    p Game #{game.name} is waiting for more players ...
+    p
+        for player in game.players
+            ul
+                li #{player.displayName}
+    p
+        button#btnStartGame Ready to Play!
+    if !isInGame
+        p
+            button#btnJoinGame Join this Game
+block scripts
+    script.
+        var gameData = !{JSON.stringify(gameData)};
+    script(src="/javascripts/waiting-dashboard.js")

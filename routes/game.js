@@ -4,12 +4,7 @@
 
 
 var express = require('express');
-var gameFactory = require('../api/game');
-var game;
-var database = require('../api/database').promise.then(function(db) {
-    game = gameFactory(db);
-});
-
+var game = require('../api/game');
 
 var router = express.Router();
 

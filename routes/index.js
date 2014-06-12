@@ -2,12 +2,8 @@ module.exports = function(app, passport) {
     var express = require('express');
     var router = express.Router();
 
-    var gameFactory = require('../api/game');
+    var game = require('../api/game');
     var userApi = require('../api/user');
-    var game;
-    var database = require('../api/database').promise.then(function(db) {
-        game = gameFactory(db);
-    });
 
     function isLoggedIn(req,res,next) {
         if(req.isAuthenticated()) { return next(); }

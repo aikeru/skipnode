@@ -159,7 +159,4 @@ var instance = {
     }
 };
 
-module.exports = function(dbAsync) {
-
-    return instance;
-};
+module.exports = instance;

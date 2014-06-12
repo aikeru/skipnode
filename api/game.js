@@ -1,11 +1,10 @@
 
-var db,
-    games;
+var db = require('./database').getDatabase(),
+    games = require('./database').getCollection('games');
 var Deck = require('./skipnode.Deck'),
     util = require('./util'),
     Promise = require('bluebird'),
     getRandom = util.getRandom;
-var collection = require('mongodb').Collection;
 var findGame = function(gameName) {
   return games.findOneAsync({name: gameName});
 };
@@ -161,8 +160,6 @@ var instance = {
 };
 
 module.exports = function(dbAsync) {
-    db = dbAsync;
-    games = db.collection('games');
 
     return instance;
 };

@@ -1,9 +1,9 @@
 
 var db = require('./database').getDatabase(),
-    users = db.collection('users'),
-    games = db.collection('games'),
+    users = require('./database').getCollection('users'),
+    games = require('./database').getCollection('games'),
     bcrypt = require('bcrypt-nodejs'),
-    ObjectID = require('mongodb').ObjectID;
+    ObjectID = require('./database').getObjectID();
 
 var util = require('./util'),
     Promise = require('bluebird'),

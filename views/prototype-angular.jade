@@ -1,0 +1,27 @@
+//
+   Created by Michael on 6/15/2014.
+//
+   Created by Michael on 5/2/2014.
+mixin displayCard(card, index)
+    if !card
+        div(class='emptyCard', data-index=index) &nbsp;
+    else if card.value === 0
+        div(class='card ' + card.color, data-color=card.color, data-value=card.value, data-index=index) Skip
+    else
+        div(class='card ' + card.color, data-color=card.color, data-value=card.value, data-index=index) #{card.value}
+doctype
+html(lang="en", ng-app="skipnodeApp")
+    head
+        title= title
+        meta(name=viewport, content="width=device-width, initial-scale=4.0, maximum-scale=4.0, user-scalable=no")
+        script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js")
+        link(rel="stylesheet", href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/redmond/jquery-ui.css")
+        link(rel="stylesheet", href="/stylesheets/dashboard.css")
+        script(type='text/javascript', src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js")
+        script(type='text/javascript', src="bower_components/angular/angular.js")
+        script(type='text/javascript', src="bower_components/angular-route/angular-route.js")
+        script(type='text/javascript', src="/javascripts/app.js")
+        script(type='text/javascript', src="/javascripts/controllers.js")
+        script(src="/javascripts/dashboard.js")
+    body(style="margin: 0 0 0 0;")
+        div(ng-view)

@@ -1,0 +1,15 @@
+//
+   Created by Michael on 6/15/2014.
+h1= title
+p Sign Up for SkipNode
+p
+    form(action='/signup', method='post')
+        div
+            | Email :
+            input(type="text", name="email")
+        div
+            | Password :
+            input(type="text", name="password")
+        div
+            button(type="submit") Sign Up
+        div #{message}

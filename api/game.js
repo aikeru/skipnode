@@ -127,6 +127,13 @@ var instance = {
             .then(function(game) {
                 var currentPlayer = game.players[game.currentPlayerIndex];
                 var card = currentPlayer.hand.splice(fromIndex, 1)[0];
+
+                if(currentPlayer.hand.length === 0) {
+                    //Hand is now empty, refill
+                    var cards = game.deck.splice(0, 5);
+                    currentPlayer.hand = currentPlayer.hand.concat(cards);
+                }
+
                 if(toLocation === 'table') {
                     game.tableSlots[toIndex].push(card);
                     if(card.value === 12) {

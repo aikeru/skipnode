@@ -139,7 +139,8 @@ function initTurn() {
                     if(fromValue === 1 && toValue !== undefined) {
                         alert('You can only play a one (1) on an empty slot.');
                         return;
-                    } else if(fromValue !== toValue + 1) {
+                    } else if(fromValue !== 1
+                            && fromValue !== toValue + 1) {
                         alert('That is not a valid play.');
                         return;
                     }

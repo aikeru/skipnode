@@ -28,6 +28,10 @@ module.exports = function(app, passport) {
         failureFlash: true
     }));
 
+	router.get('/testax', function(req, res) {
+		res.render('testax', { title: 'Test ActiveX' });
+	});
+
     router.get('/signup', function(req, res) {
         res.render('signup', { message: req.flash('signupMessage') });
     });

@@ -20,6 +20,12 @@ router.post('/', function(req, res) {
           res.json(true);
        });
 });
+router.get('/refreshSlots/:name', function(req,res) {
+	game.refreshSlots(req.params.name).then(function(game) {
+		res.json({success:true});
+	});
+});
+
 router.get('/:name',function(req, res) {
    game.findGame(req.params.name)
        .then(function(game) {

@@ -1,5 +1,8 @@
+body {
+	font-size: 67%;
+}
 .jqButton {
-    font-size: 80%;
+    font-size: 48px;
 }
 div.selected {
     background-color: grey;

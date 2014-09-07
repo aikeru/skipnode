@@ -122,6 +122,17 @@ var instance = {
                 return instance.saveGame(game);
             })
     },
+    refreshSlots: function(gameName) {
+        return findGame(gameName).then(function(game) {
+        	for(var i = 0; i < game.tableSlots.length; i++) {
+			 if(game.tableSlots[i].length === 12) {
+				game.discard = game.discard.concat(game.tableSlots[i].slice(0));
+				game.tableSlots[i] = [];
+			}
+		}
+		return instance.saveGame(game);
+	});
+    },
     playFromHand: function(gameName, fromIndex, toLocation, toIndex) {
         return findGame(gameName)
             .then(function(game) {
@@ -136,7 +147,7 @@ var instance = {
 
                 if(toLocation === 'table') {
                     game.tableSlots[toIndex].push(card);
-                    if(card.value === 12) {
+                    if(game.tableSlots[toIndex].length === 12) {
                         //Discard this stack
                         game.discard = game.discard.concat(game.tableSlots[toIndex].slice(0));
                         game.tableSlots[toIndex] = [];
